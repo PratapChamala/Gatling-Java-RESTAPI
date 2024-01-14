@@ -1,8 +1,6 @@
-
-<<<<<<< HEAD
 # Gatling-java-REST API
 =================================================
-Loadtest REST API using Gatling - Java 
+Load test REST API using Gatling - Java 
 ===================================================
 
 #### ==> Do not execute with more than one user and only one execution

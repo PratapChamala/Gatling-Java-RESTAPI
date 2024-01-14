@@ -8,11 +8,11 @@ import io.gatling.javaapi.http.*;
 
 import static io.gatling.javaapi.http.HttpDsl.*;
 
-public class Restsample extends Simulation {
+public class RestServiceEndpoints extends Simulation {
     private final HttpProtocolBuilder protocol = http.baseUrl("https://reqres.in/api/");
 
     // #1 #2 and #3 Get AuthToken
-    private final ChainBuilder getAuthToken = exec(http("T01-GetAuthToken")
+    ChainBuilder getAuthToken = exec(http("T01-GetAuthToken")
             .post("/register")
             .header("content-type", "application/json")
             .body(StringBody("{\n" +
@@ -31,14 +31,14 @@ public class Restsample extends Simulation {
                 return session;
             });
     // #4 and # 5 pause(1) , pause(100,200)
-    private final ChainBuilder getAllUsers = exec(http("T02-GetAllUsers").get("/users?page=2")
+    ChainBuilder getAllUsers = exec(http("T02-GetAllUsers").get("/users?page=2")
             .header("content-type", "application/json")
             .check(jsonPath("$.data[*].id").findAll().saveAs("users")))
             .foreach("#{users}", "user") // foreach loop through users list
             .on(exec(http("T02.1-GetSingleUser")
                     .get("https://reqres.in/api/users/#{user}")
                     .check(status().is(200))).pause(1));
-    private final ChainBuilder createUser = exec(http("T03-CreateUser")
+    ChainBuilder createUser = exec(http("T03-CreateUser")
             .post("/api/users")
             .body(StringBody("{\n" +
                     "    \"name\": \"morpheus\",\n" +
@@ -47,13 +47,13 @@ public class Restsample extends Simulation {
             .header("content-type", "application/json")
             .check(status().is(201)));
 
-    private final ScenarioBuilder authToken = scenario("GetAuthToken").exec(getAuthToken); // #1 Get auth_token request
-    private final ScenarioBuilder allUsers = scenario("getAllUsers").exec(getAllUsers); // // #4 and # 5
-    private final ScenarioBuilder createusers = scenario("CreateUser")
+    ScenarioBuilder authToken = scenario("GetAuthToken").exec(getAuthToken); // #1 Get auth_token request
+    ScenarioBuilder allUsers = scenario("getAllUsers").exec(getAllUsers); // // #4 and # 5
+    ScenarioBuilder createusers = scenario("CreateUser")
             .repeat(3).on(exec(createUser).pause(1)); // #6 #7 repeat
-    private final ScenarioBuilder allendpoints = scenario("AllEndpointsSequential")
+    ScenarioBuilder allendpoints = scenario("AllEndpointsSequential")
             .exec(getAuthToken.pace(1), createUser.pace(1), getAllUsers.pace(1)); // #8 all endpoints at once
-    private final ScenarioBuilder scn = scenario("CreateUser")
+    ScenarioBuilder scn = scenario("CreateUser")
             .exec(getAuthToken)
             .forever().on(pace(1).exec(createUser)); // #9 Execute token endpoint once and create user forever
     {
@@ -64,7 +64,7 @@ public class Restsample extends Simulation {
         // setUp(allendpoints.injectOpen(atOnceUsers(1))).protocols(protocol).maxDuration(10); // #8 all endpoints at once
         // setUp(scn.injectOpen(atOnceUsers(1))).protocols(protocol).maxDuration(10); // #9
         // setUp(authToken.injectOpen(atOnceUsers(1)),allUsers.injectOpen(atOnceUsers(2)),
-        //         createusers.injectOpen(atOnceUsers(3)).protocols(protocol)).maxDuration(15); // #12 assign threads for each endpoint
+            //createusers.injectOpen(atOnceUsers(3)).protocols(protocol)).maxDuration(15); // #12 assign threads for each endpoint
 
     }
 
