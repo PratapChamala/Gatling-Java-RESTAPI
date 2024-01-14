@@ -1,7 +1,4 @@
-# Gatling-java-REST API
-=================================================
-Load test REST API using Gatling - Java 
-===================================================
+# Load test REST API using Gatling-Java 
 
 #### ==> Do not execute with more than one user and only one execution
 #### ==> All the requests are made to reqres.in website 
@@ -26,9 +23,9 @@ Load test REST API using Gatling - Java
 
 #### Feeders 
     14. how to read data from files for post and get calls
-    15. how to feed dynamic values from CSV file
+    15. how to feed dynamic values from a CSV file
     16. how to create dynamic data for each request using custom feeders
-            i.e using date, random number, UUID , names ..etc
+            i.e using date, random number, UUID, names ..etc
 
 
 
