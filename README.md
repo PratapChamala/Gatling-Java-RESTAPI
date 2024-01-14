@@ -1,6 +1,6 @@
 
 <<<<<<< HEAD
-# Gatling-java-sample
+# Gatling-java-REST API
 =================================================
 Loadtest REST API using Gatling - Java 
 ===================================================
