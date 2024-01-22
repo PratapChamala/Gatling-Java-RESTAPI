@@ -26,6 +26,8 @@
     15. how to feed dynamic values from a CSV file
     16. how to create dynamic data for each request using custom feeders
             i.e using date, random number, UUID, names ..etc
+    > Modularized 
+    > Added wait to scenarios (ex: 20 % of the load and 40% of the load etc) 
 
 
 
