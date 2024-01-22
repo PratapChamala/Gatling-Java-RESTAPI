@@ -8,7 +8,6 @@ public class Engine {
       .resourcesDirectory(IDEPathHelper.mavenResourcesDirectory.toString())
       .resultsDirectory(IDEPathHelper.resultsDirectory.toString())
       .binariesDirectory(IDEPathHelper.mavenBinariesDirectory.toString());
-
     Gatling.fromMap(props.build());
   }
 }
